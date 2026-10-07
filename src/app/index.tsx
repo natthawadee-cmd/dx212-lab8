@@ -1,7 +1,9 @@
 import { Stack } from "expo-router";
 import { useState } from "react";
+
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import EmptyState from "@/components/EmptyState"; // import Component ใหม่
 import MenuCard from "@/components/MenuCard";
 import { filterByBudget, sortByPrice, type Menu } from "@/lib/logic";
 
@@ -18,7 +20,7 @@ export default function Index() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Stack.Screen options={{ title: "กินในงบ" }} />
-      <Text style={styles.title}>กินในงบ</Text>
+      <Text style={styles.title}>กินในงบ - Natthawadee Sawaswor</Text>
 
       <View style={styles.row}>
         <Pressable style={styles.btn} onPress={() => setBudget(budget - 10)}>
@@ -30,7 +32,11 @@ export default function Index() {
         </Pressable>
       </View>
 
-      {result.length === 0 && <Text>ไม่มีเมนูในงบนี้</Text>}
+      {/* เรียกใช้ Component ใหม่ เมื่อไม่มีเมนูในงบ */}
+      {result.length === 0 && (
+        <EmptyState message="ไม่มีเมนูอาหารในงบนี้เลย" emoji="💸" />
+      )}
+
       {result.map((m) => (
         <MenuCard key={m.id} name={m.name} price={m.price} />
       ))}
@@ -40,7 +46,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: { padding: 16 },
-  title: { fontSize: 28, fontWeight: "bold", marginBottom: 16 },
+  title: { fontSize: 24, fontWeight: "bold", marginBottom: 16 },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -56,3 +62,4 @@ const styles = StyleSheet.create({
   btnText: { color: "white", fontWeight: "bold" },
   budget: { fontSize: 18 },
 });
+``;
